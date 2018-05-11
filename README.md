@@ -19,12 +19,12 @@ mvn package
 ```
 Install Chai 
 ```
+cd ..
 npm install chai
 ```
 
 ### Running
  ```
- cd ..
  js RunAllTests.js
  ```
 
