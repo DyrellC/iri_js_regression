@@ -20,6 +20,7 @@ $ mvn package
 
 ### Running
  ```
- js RunAllTests.js
+ $ cd ..
+ $ js RunAllTests.js
  ```
 
