@@ -1,5 +1,5 @@
 # JavaScript IRI Regression Testing
-A series of regression tests for IRI written in JS
+A series of regression tests for IRI written in JS. Utilizes Chai.
 
 ## Prerequisites
 This repository assumes that you are running node.js already. You will also need maven for the IRI.
@@ -16,6 +16,10 @@ git clone https://github.com/iotaledger/iri.git
 cd iri
 mvn clean compile 
 mvn package
+```
+Install Chai 
+```
+npm install chai
 ```
 
 ### Running
