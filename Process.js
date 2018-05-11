@@ -46,14 +46,6 @@ killNodes: function(numNodes,pids) {
    
 };
 
-/*
-execute.prototype.setParams = function(vars) {
-    vars = vars || {};
-
-    this.pid = vars.pid;
-    this.port 
-}
-*/
 
 
 
