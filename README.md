@@ -7,9 +7,8 @@ This repository assumes that you are running node.js already. You will also need
 ### Installation 
 Clone the repo
 ```
-git clone https://github.com/DyrellC/iri_js_regression.git
-cd iri_js_regression
-
+$ git clone https://github.com/DyrellC/iri_js_regression.git
+$ cd iri_js_regression
 ```
 Install the IRI 
 ```
