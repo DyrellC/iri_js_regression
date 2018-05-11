@@ -2,7 +2,7 @@
 A series of regression tests for IRI written in JS
 
 ## Prerequisites
-This repository assumes that you are running node.js already
+This repository assumes that you are running node.js already. You will also need maven for the IRI.
 
 ### Installation 
 ```
