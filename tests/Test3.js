@@ -1,11 +1,11 @@
-var CONFIG = require('./Config');
-var PROCESS = require('./Process');
-var COMMAND = require('./CommandBuilder');
+var CONFIG = require('../utils/Config');
+var PROCESS = require('../utils/Process');
+var COMMAND = require('../utils/CommandBuilder');
 var assert = require('chai').assert;
 
 module.exports = {
 
-test4: function() {
+test3: function() {
 
 const version = "1.4.2.4";
 const port = "14265";
@@ -16,7 +16,7 @@ var pids = [];
 var test1 = new CONFIG({
 'version': version, 
 'port': port,
-'testnet': false,
+'testnet': true,
 'unpack': true, 
 'numNodes': 1
 });
@@ -27,7 +27,7 @@ assert.typeOf(test1.port, 'number');
 
 
 
-console.log("Running Test 4");
+console.log("Running Test 3");
 console.log(test1.port);
 
 

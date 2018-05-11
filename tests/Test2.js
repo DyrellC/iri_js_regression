@@ -1,6 +1,6 @@
-var CONFIG = require('./Config');
-var PROCESS = require('./Process');
-var COMMAND = require('./CommandBuilder');
+var CONFIG = require('../utils/Config');
+var PROCESS = require('../utils/Process');
+var COMMAND = require('../utils/CommandBuilder');
 var assert = require('chai').assert;
 
 

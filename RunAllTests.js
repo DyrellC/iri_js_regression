@@ -1,7 +1,7 @@
-var TEST1 = require('./Test1');
-var TEST2 = require('./Test2');
-var TEST3 = require('./Test3');
-var TEST4 = require('./Test4');
+var TEST1 = require('./tests/Test1');
+var TEST2 = require('./tests/Test2');
+var TEST3 = require('./tests/Test3');
+var TEST4 = require('./tests/Test4');
 
 var expect = require('chai').expect;
 
