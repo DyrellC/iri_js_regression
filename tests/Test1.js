@@ -23,7 +23,7 @@ var test1 = new CONFIG({
 'port': port,
 'testnet': false,
 'unpack': false, 
-'numNodes': 2
+'numNodes': 4
 });
 
 assert.isObject(test1, 'Test1 is not an object');
@@ -35,9 +35,6 @@ assert.typeOf(test1.port, 'number');
 console.log("Running Test 1");
 console.log("Port: " +test1.port);
 
-
-for(var i=1;i<=test1.numNodes;i++){
-
 //redirect to iri
 try{
 process.chdir('./iri');
@@ -45,6 +42,9 @@ console.log("Directory: " + process.cwd());
 }catch(err) {
     console.log('chdir: ' + err);
 }
+
+
+for(var i=1;i<=test1.numNodes;i++){
 
 //file handling for node
 var node = "node"+i;
@@ -58,6 +58,7 @@ console.log("Previous " +node + " removed");
 
 try{
     fs.mkdirSync("./"+node);
+    fs.mkdirSync("./"+node+"/target/")
     console.log("Created directory: " + node);
  } catch(err) {
     console.log(node + " Not created: " + err);
@@ -67,12 +68,10 @@ try{
 
 try{
 console.log("Trying to copy");
-copydir.sync("./target","./"+node);
+copydir.sync("./target","./"+node+"/target/");
 
 // var cpy = fs.readdirSync("./target");
  console.log("Copy successful");
-// console.log(cpy[0]);
-// console.log(cpy.length);
 } catch(err) {
     console.log("Error with copy: " + err);   
 }
@@ -98,13 +97,6 @@ var Command = COMMAND.buildCommand(test1.version,test1.port,test1.numNodes,
 assert.typeOf(Command, 'string');
 console.log(Command);
 
-//redirect back to main folder
-try{
-process.chdir('../');
-console.log("Directory" + process.cwd());
-}catch(err) {
-    console.log('chdir: ' + err);
-}
 
 
 
@@ -115,7 +107,17 @@ PROCESS.openNodes(Command,i,pids);
 
 test1.port+=1;
 process.chdir("../");
+console.log("Directory post command: " + process.cwd());
 }
+
+//redirect back to main folder
+try{
+process.chdir('../');
+console.log("Directory" + process.cwd());
+}catch(err) {
+    console.log('chdir: ' + err);
+}
+
 
 
 setTimeout(function() {

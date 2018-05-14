@@ -9,7 +9,7 @@ buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
       assert.typeOf(numNodes,'number');
       
       var base = "java -jar ";
-      var location = "./" + node + "/";
+      var location = "./target/";
       var iri = "iri-"+ version + ".jar ";  
       var port = "-p " + portIn + " -u " + portIn + " -t " + (portIn  + numNodes) + " ";
       var neighbors = "-n \"udp://localhost:" + (portIn - 1) + 

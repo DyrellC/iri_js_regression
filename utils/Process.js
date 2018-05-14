@@ -12,11 +12,6 @@ openNodes: function(command, num,pids){
        
             console.log(stderr + "\n");
             
-            //circumvented by chai expect
-            /*
-            if(error !== null) { 
-                console.log("exec error: " + error);
-            }*/
         });
 
     console.log("PID: " + child.pid);
@@ -48,7 +43,7 @@ killNodes: function(numNodes,pids) {
                 ". Process may not exist");
             }
         
-            console.log("Processes " + child + " and " + child2 + " exited");
+            console.log("Processes exited successfully");
             setTimeout(function() {
                 process.exitCode;
         
