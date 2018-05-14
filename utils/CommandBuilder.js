@@ -2,14 +2,14 @@ var assert = require('chai').assert;
 
 module.exports = {
 
-buildCommand: function (version,portIn,numNodes,testnet,unpack){
+buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
         
       assert.typeOf(version,'string');
       assert.typeOf(portIn,'number');
       assert.typeOf(numNodes,'number');
       
       var base = "java -jar ";
-      var location = "./iri/target/"
+      var location = "./" + node + "/";
       var iri = "iri-"+ version + ".jar ";  
       var port = "-p " + portIn + " -u " + portIn + " -t " + (portIn  + numNodes) + " ";
       var neighbors = "-n \"udp://localhost:" + (portIn - 1) + 

@@ -10,18 +10,18 @@ openNodes: function(command, num,pids){
         function(error, stdout, stderr){
             console.log('stdout: ' + stdout);
        
-            console.log("stderr: " + stderr);
+            console.log(stderr + "\n");
             
-
+            //circumvented by chai expect
+            /*
             if(error !== null) { 
                 console.log("exec error: " + error);
-            }
+            }*/
         });
 
     console.log("PID: " + child.pid);
     var pid = child.pid;
     pids.push(pid);
-    console.log(pids);
 },
 
 
@@ -31,9 +31,22 @@ killNodes: function(numNodes,pids) {
             var child = Number(pids[i-1]);
             var child2 = child+1;
             console.log("Killing " + child + " and " + child2);
-        
-            process.kill(child);
-            process.kill(child2);
+            
+            try{
+                process.kill(child);
+                console.log("Processes " + child + " exited");
+            }catch(err){
+                console.log("Error exiting process: " + child + 
+                ". Process may not exist");
+            }
+            
+            try{
+                process.kill(child2);
+                console.log("Processes " + child2 + " exited");
+            }catch(err){
+                console.log("Error exiting process: " + child2 + 
+                ". Process may not exist");
+            }
         
             console.log("Processes " + child + " and " + child2 + " exited");
             setTimeout(function() {

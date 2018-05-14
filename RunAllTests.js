@@ -5,7 +5,7 @@ var TEST4 = require('./tests/Test4');
 
 var expect = require('chai').expect;
 
-console.log("Running Tests");
+console.log("Running Tests \n");
 
 
 //Run test 1
@@ -13,7 +13,7 @@ expect(function() {
 TEST1.test1()
 }).to.not.throw();
 
-
+/*
 setTimeout(function() {
     expect(function() {
     TEST2.test2()
@@ -31,15 +31,5 @@ setTimeout(function() {
     TEST4.test4()
     }).to.not.throw();     
 }, 150000);
-
-/*
-//Run test 2
-expect(function() {
-TEST2.test2()
-}).to.not.throw();
-//Run test 3
-//Run test 4
-//Run test 5
 */
-
 
