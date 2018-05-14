@@ -43,7 +43,7 @@ killNodes: function(numNodes,pids) {
                 ". Process may not exist");
             }
         
-            console.log("Processes exited successfully");
+            console.log("Processes exited successfully \n");
             setTimeout(function() {
                 process.exitCode;
         

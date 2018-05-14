@@ -23,17 +23,19 @@ var test3 = new CONFIG({
 'port': port,
 'testnet': false,
 'unpack': true, 
-'numNodes': 1
+'numNodes': 2
 });
 
-assert.isObject(test1, 'Test1 is not an object');
+test3.unpack = true;
 
-assert.typeOf(test1.port, 'number');
+assert.isObject(test3, 'Test3 is not an object');
+
+assert.typeOf(test3.port, 'number');
 
 
 
-console.log("Running Test 1");
-console.log("Port: " +test1.port);
+console.log("Running Test 3");
+console.log("Port: " +test3.port);
 
 //redirect to iri
 try{
@@ -44,7 +46,7 @@ console.log("Directory: " + process.cwd());
 }
 
 
-for(var i=1;i<=test1.numNodes;i++){
+for(var i=1;i<=test3.numNodes;i++){
 
 //file handling for node
 var node = "node"+i;
@@ -91,8 +93,8 @@ console.log("Directory pre command: " + process.cwd());
 
 //Build Command for Execution 
 
-var Command = COMMAND.buildCommand(test1.version,test1.port,test1.numNodes,
-                                    test1.testnet,test1.unpack,node); 
+var Command = COMMAND.buildCommand(test3.version,test3.port,test3.numNodes,
+                                    test3.testnet,test3.unpack,node); 
 
 assert.typeOf(Command, 'string');
 console.log(Command);
@@ -105,7 +107,7 @@ expect(function() {
 PROCESS.openNodes(Command,i,pids); 
 }).to.not.throw();
 
-test1.port+=1;
+test3.port+=1;
 process.chdir("../");
 console.log("Directory post command: " + process.cwd());
 }
@@ -121,7 +123,7 @@ console.log("Directory" + process.cwd());
 
 
 setTimeout(function() {
-PROCESS.killNodes(test1.numNodes,pids);
+PROCESS.killNodes(test3.numNodes,pids);
 
 }, 40000);
 

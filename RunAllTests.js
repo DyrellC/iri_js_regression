@@ -13,7 +13,7 @@ expect(function() {
 TEST1.test1()
 }).to.not.throw();
 
-/*
+
 setTimeout(function() {
     expect(function() {
     TEST2.test2()
@@ -31,5 +31,4 @@ setTimeout(function() {
     TEST4.test4()
     }).to.not.throw();     
 }, 150000);
-*/
 

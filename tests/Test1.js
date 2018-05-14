@@ -22,9 +22,11 @@ var test1 = new CONFIG({
 'version': version, 
 'port': port,
 'testnet': false,
-'unpack': false, 
-'numNodes': 4
+'numNodes': 2,
+'unpack': false 
 });
+
+test1.unpack = false;
 
 assert.isObject(test1, 'Test1 is not an object');
 
@@ -90,7 +92,6 @@ console.log("Directory pre command: " + process.cwd());
 
 
 //Build Command for Execution 
-
 var Command = COMMAND.buildCommand(test1.version,test1.port,test1.numNodes,
                                     test1.testnet,test1.unpack,node); 
 
