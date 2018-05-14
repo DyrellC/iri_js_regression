@@ -1,4 +1,5 @@
 var assert = require('chai').assert;
+var fs = require('fs');
 
 module.exports = {
 
