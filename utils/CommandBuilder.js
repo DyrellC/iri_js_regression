@@ -16,7 +16,7 @@ buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
       console.log("Unpack: " + unpack);
       
       var base = "java -jar ";
-      var location = "./target/";
+      var location = "./";
       var iri = "iri-"+ version + ".jar ";  
       var port = "-p " + portIn + " -u " + portIn + " -t " + (portIn  + numNodes) + " ";
       var neighbors = "-n \"udp://localhost:" + (portIn - 1) + 
@@ -33,10 +33,10 @@ buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
                 try{
                     console.log("Trying to copy");
                     
-                    copydir.sync("../../testnet_files/testnetdb",
+                    copydir.sync("../../../testnet_files/testnetdb",
                                     "./testnetdb");
                     fs.writeFileSync('snapshot.txt','');
-                    fs.copyFileSync("../../testnet_files/snapshot.txt",
+                    fs.copyFileSync("../../../testnet_files/snapshot.txt",
                                     "./snapshot.txt");
 
                     console.log("Copy successful");
@@ -45,7 +45,7 @@ buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
                 }
              } else {
                     console.log("copy mainnet db");
-                    copydir.sync("../../testnet_files/testnetdb", "./");
+                    copydir.sync("../../../testnet_files/testnetdb", "./");
              }
             }
         
@@ -57,7 +57,7 @@ buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
              cmdOpt += "--testnet";
              if(unpack == true){
               console.log("unpack");
-              cmdOpt = fs.readFileSync("../../testnet_files/cli_opts","utf8");
+              cmdOpt = fs.readFileSync("../../../testnet_files/cli_opts","utf8");
              }
            } else {
               console.log("start node.. mainnet on port: "+ portIn);

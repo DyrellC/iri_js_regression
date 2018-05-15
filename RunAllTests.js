@@ -1,34 +1,29 @@
-var TEST1 = require('./tests/Test1');
-var TEST2 = require('./tests/Test2');
-var TEST3 = require('./tests/Test3');
-var TEST4 = require('./tests/Test4');
+var TESTS = require('./tests/index.js');
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
+const fs = require('fs');
+const sleep = require('sleep');
 
-console.log("Running Tests \n");
+var allTests = [TESTS.Test1,TESTS.Test2,TESTS.Test3,TESTS.Test4];
+
+var version = "";
+
+if(process.argv[2] != ""){
+	version = process.argv[2];
+} else {
+	version = "1.4.2.4";
+}
 
 
-//Run test 1
-expect(function() {
-TEST1.test1()
-}).to.not.throw();
+console.log("Preparing Tests \n");
+
+for(var i=0;i<allTests.length; i++){ 
+
+	expect(function() {
+      		allTests[i].Test(version);
+	}).to.not.throw();
+	sleep.sleep(10);
+}
 
 
-setTimeout(function() {
-    expect(function() {
-    TEST2.test2()
-    }).to.not.throw();
-}, 50000);
-
-setTimeout(function() {
-    expect(function() {
-    TEST3.test3()
-    }).to.not.throw();
-}, 100000);
-
-setTimeout(function() {
-    expect(function() {
-    TEST4.test4()
-    }).to.not.throw();     
-}, 150000);
 

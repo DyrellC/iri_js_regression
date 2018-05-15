@@ -1,132 +1,73 @@
 var CONFIG = require('../utils/Config');
 var PROCESS = require('../utils/Process');
 var COMMAND = require('../utils/CommandBuilder');
+var FILE = require('../utils/FileControl');
+
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 
-const fs = require('fs');
-const rimraf = require('rimraf');
-const copydir = require('copy-dir');
+const sleep = require('sleep');
 
 module.exports = {
 
-test2: function() {
+    Test: function(version) {
 
-const version = "1.4.2.4";
-const port = "14265";
+    const port = "14265";
 
-var pids = [];
-
-
-var test2 = new CONFIG({
-'version': version, 
-'port': port,
-'testnet': true,
-'unpack': false, 
-'numNodes': 2
-});
-test2.unpack = false;
-
-assert.isObject(test2, 'Test 2 is not an object');
-
-assert.typeOf(test2.port, 'number');
+    var pids = [];
 
 
+    var test = new CONFIG({
+    'version': version, 
+    'port': port,
+    'testnet': true,
+    'unpack': false, 
+    'numNodes': 2
+    });
+    
+    test.unpack = false;
 
-console.log("Running Test 2");
-console.log("Port: " +test2.port);
+    assert.isObject(test, 'Test 2 is not an object');
+    assert.typeOf(test.port, 'number');
 
-//redirect to iri
-try{
-process.chdir('./iri');
-console.log("Directory: " + process.cwd());
-}catch(err) {
-    console.log('chdir: ' + err);
-}
+    console.log("Running Test 2");
+    console.log("Port: " +test.port);
 
+    //redirect to iri
+    FILE.redirect('./iri');
 
-for(var i=1;i<=test2.numNodes;i++){
+    for(var i=1;i<=test.numNodes;i++){
 
-//file handling for node
-var node = "node"+i;
+        //file handling for node
+        var node = "node"+i;
 
-try{
-rimraf.sync("./"+node)
-console.log("Previous " +node + " removed");
-} catch(err) {
-    console.log("Sync: " + err);
-}
+        FILE.handleTestFiles(node,'2');
 
-try{
-    fs.mkdirSync("./"+node);
-    fs.mkdirSync("./"+node+"/target/")
-    console.log("Created directory: " + node);
- } catch(err) {
-    console.log(node + " Not created: " + err);
- }
+        //Build Command for Execution 
 
- console.log("Directory pre grab: " + process.cwd());
+        var Command = COMMAND.buildCommand(test.version,test.port,test.numNodes,test.testnet,test.unpack,node); 
 
-try{
-console.log("Trying to copy");
-copydir.sync("./target","./"+node+"/target/");
+        assert.typeOf(Command, 'string');
+        console.log(Command);
 
-// var cpy = fs.readdirSync("./target");
- console.log("Copy successful");
-} catch(err) {
-    console.log("Error with copy: " + err);   
-}
+        //Execute -jar file command 
+        expect(function() {
+        PROCESS.openNodes(Command,i,pids); 
+        }).to.not.throw();
+        
+        test.port+=1;
+        FILE.redirect("../../");
+        console.log("Directory post command: " + process.cwd()+ "\n\n");
+        }
 
+        //redirect back to main folder
+        FILE.redirect('../');
+        expect(process.cwd()).to.not.include('iri');
 
+        sleep.sleep(40);
+        PROCESS.killNodes(test.numNodes,pids);
 
-
-
-//redirect to node folder
-try{
-process.chdir('./'+node);
-console.log("Directory pre command: " + process.cwd());
-}catch(err) {
-    console.log('chdir: ' + err);
-}
-
-
-//Build Command for Execution 
-
-var Command = COMMAND.buildCommand(test2.version,test2.port,test2.numNodes,
-                                    test2.testnet,test2.unpack,node); 
-
-assert.typeOf(Command, 'string');
-console.log(Command);
-
-
-
-
-//Execute -jar file command 
-expect(function() {
-PROCESS.openNodes(Command,i,pids); 
-}).to.not.throw();
-
-test2.port+=1;
-process.chdir("../");
-console.log("Directory post command: " + process.cwd());
-}
-
-//redirect back to main folder
-try{
-process.chdir('../');
-console.log("Directory" + process.cwd());
-}catch(err) {
-    console.log('chdir: ' + err);
-}
-
-
-
-setTimeout(function() {
-PROCESS.killNodes(test2.numNodes,pids);
-
-}, 40000);
-
-}
+    }   
 }
 
 

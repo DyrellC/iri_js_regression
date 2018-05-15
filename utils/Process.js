@@ -4,11 +4,12 @@ module.exports = {
 
 openNodes: function(command, num,pids){
     var child = "child"+num;
+    var pid = child;
 
     var exec = require('child_process').exec, child;
     child = exec(command, 
         function(error, stdout, stderr){
-            console.log('stdout: ' + stdout);
+            console.log('stdout: ' + pid + "\n"+stdout);
        
             console.log(stderr + "\n");
             
