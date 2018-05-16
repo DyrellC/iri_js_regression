@@ -1,0 +1,29 @@
+{
+  "name": "js_regression_tests",
+  "version": "1.0.0",
+  "description": "A series of regression tests for IRI written in JS. Utilizes Chai.",
+  "main": "RunAllTests.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": { 
+    "chai": "^4.1.2",
+    "copy-dir": "~0.3.0",
+    "rimraf": "^2.6.2",
+    "maven": "~4.40"  
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DyrellC/iri_js_regression.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DyrellC/iri_js_regression/issues"
+  },
+  "homepage": "https://github.com/DyrellC/iri_js_regression#readme"
+}
