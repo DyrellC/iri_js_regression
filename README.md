@@ -2,9 +2,13 @@
 A series of regression tests for IRI written in JS. Utilizes Chai.
 
 ## Prerequisites
-This repository assumes that you are running the latest version of node.js already. You will also need maven for the IRI.
+This repository assumes that you are running the latest version of node.js already.
 
 ### Installation 
+Install dependencies
+```
+npm install 
+```
 Clone the repo
 ```
 git clone https://github.com/DyrellC/iri_js_regression.git
@@ -17,16 +21,16 @@ cd iri
 mvn clean compile 
 mvn package
 ```
-Install Chai, copy-dir, and rimraf 
-```
-cd ..
-npm install chai
-npm install copy-dir
-npm i rimraf
-```
+
 
 ### Running
+
+
+Example 
  ```
  js RunAllTests.js
  ```
-
+ Additionally, if you intend to use a different IRI version, you can add the version as an extra argument
+ ```
+ js RunAllTests.js 1.4.2.4
+```
