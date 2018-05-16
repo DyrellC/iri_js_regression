@@ -5,14 +5,15 @@ A series of regression tests for IRI written in JS. Utilizes Chai.
 This repository assumes that you are running the latest version of node.js already.
 
 ### Installation 
-Install dependencies
-```
-npm install 
-```
+
 Clone the repo
 ```
 git clone https://github.com/DyrellC/iri_js_regression.git
 cd iri_js_regression
+```
+Install dependencies
+```
+npm install 
 ```
 Install the IRI 
 ```
