@@ -35,7 +35,6 @@ module.exports = {
 
     //redirect to iri
     FILE.redirect('./iri');
-    expect(process.cwd()).to.include("iri");
 
     for(var i=1;i<=test.numNodes;i++){
         //file handling for node
@@ -61,7 +60,6 @@ module.exports = {
         //redirect back to main folder
         FILE.redirect('../');
         console.log(process.cwd() + "here \n\n");
-        expect(process.cwd()).to.not.include('iri');
 
         //Wait and kill processes
         sleep.sleep(40);

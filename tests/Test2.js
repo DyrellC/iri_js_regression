@@ -62,7 +62,6 @@ module.exports = {
 
         //redirect back to main folder
         FILE.redirect('../');
-        expect(process.cwd()).to.not.include('iri');
 
         sleep.sleep(40);
         PROCESS.killNodes(test.numNodes,pids);
