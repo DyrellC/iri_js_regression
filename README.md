@@ -2,7 +2,9 @@
 A series of regression tests for IRI written in JS. Utilizes Chai.
 
 ## Prerequisites
-This repository assumes that you are running the latest version of node.js already.
+This repository requires that you use the latest version of node.js.
+
+***If you are using Windows, you may also need to install maven manually.***
 
 ### Installation 
 
