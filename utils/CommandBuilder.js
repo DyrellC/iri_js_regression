@@ -5,7 +5,7 @@ const copydir = require('copy-dir');
 
 module.exports = {
 
-buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
+buildCommand: function (loc,version,portIn,numNodes,testnet,unpack){
         
       assert.typeOf(version,'string');
       assert.typeOf(portIn,'number');
@@ -16,7 +16,7 @@ buildCommand: function (version,portIn,numNodes,testnet,unpack,node){
       console.log("Unpack: " + unpack);
       
       var base = "java -jar ";
-      var location = "./";
+      var location = loc;
       var iri = "iri-"+ version + ".jar ";  
       var port = "-p " + portIn + " -u " + portIn + " -t " + (portIn  + numNodes) + " ";
       var neighbors = "-n \"udp://localhost:" + (portIn - 1) + 

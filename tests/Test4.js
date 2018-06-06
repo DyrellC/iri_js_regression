@@ -41,7 +41,7 @@ module.exports = {
         FILE.handleTestFiles(node,'4');
 
         //Build Command for Execution 
-        var Command = COMMAND.buildCommand(test.version,test.port,test.numNodes,test.testnet,test.unpack,node); 
+        var Command = COMMAND.buildCommand(test.version,test.port,test.numNodes,test.testnet,test.unpack); 
 
         assert.typeOf(Command, 'string');
         console.log(Command);
