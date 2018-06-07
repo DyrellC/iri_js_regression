@@ -1,5 +1,6 @@
 const fs = require('fs');
 const api = require('./API');
+const sleep = require('sleep');
 
 module.exports = {
 
@@ -18,6 +19,7 @@ testGetTransactions: function(depth,testnum,maxIterations,port){
             api.getTransactionsToApprove(depth,path,testPrefix,testnum,port);
  
             console.log("Test: " + (i+1) + " requested");
+         //   sleep.sleep(1);
         }
 },
 
@@ -27,7 +29,7 @@ getTimestamps: function(transactions,port){
 
 validateTips: function(transactions,port){
     for(var x=0;x<transactions.length;x++){
-        api.getTransactions(transactions[x],port);
+        api.findTransactions(transactions[x],port);
     }
 }
 

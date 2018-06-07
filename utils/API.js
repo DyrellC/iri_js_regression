@@ -119,13 +119,10 @@ findTransactions: function(transactions,port){
              };
 
             request(options, function(error,response,data){
-                if(!error && response.statusCode == 200){
-                    logger.handleTipValidation(data);                    
+                if(!error && response.statusCode == 200 || error == null){
+                    logger.handleTipValidation(transactions, data);                    
 
                 }else {
-                    if(error == null){
-                        console.log("Transactions are Tips");
-                    }
                     console.log("Error: " + error);
                 }                    
             });

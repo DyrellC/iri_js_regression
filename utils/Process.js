@@ -1,4 +1,5 @@
-
+var ps = require('ps-list');
+var fileControl = require('./FileControl');
 
 module.exports = {
 
@@ -9,9 +10,10 @@ openNodes: function(command, num,pids){
     var exec = require('child_process').exec, child;
     child = exec(command, 
         function(error, stdout, stderr){
-            console.log('stdout: ' + pid + "\n"+stdout);
+            var nodeLog = 'stdout: ' + pid + "\n"+stdout;
        
-            console.log(stderr + "\n");
+            nodeLog += stderr;
+            fileControl.nodeLog(nodeLog);
             
         });
 
@@ -44,6 +46,19 @@ killNodes: function(numNodes,pids) {
                 ". Process may not exist");
             }
         
+        //Kill any additional node processes that may be running
+        ps().then(data => {
+            for(var x=0;x<data.length;x++){
+                if(data[x].cmd.includes("java -jar")){              
+                    console.log(data[x]);
+                    try{
+                        process.kill(data[x].pid);
+                    }catch(err){
+                        console.log("Process could not be killed, it may have already ended or it may not exist");
+                    }
+                }
+            }
+        });    
             console.log("Processes exited successfully \n");
             setTimeout(function() {
                 process.exitCode;

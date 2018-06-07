@@ -18,7 +18,7 @@ var port = 14600;
 
 //Customizable timeout 
 var timeout = 180000;
-var exitTime = timeout + 30000;
+var exitTime = timeout + 15000;
 
 var loc = "./";
 var neighbors = "";
@@ -69,8 +69,10 @@ if(process.argv.length > 2){
                         console.log("Timeout argument not valid");
                         process.exit();                    
                     } 
-                    timeout = argVal;
+                    timeout = Number(argVal);
+                    exitTime = timeout + 15000;
                     console.log("Timeout: "+timeout);
+                    console.log("Exit Time: "+exitTime);
                     x++;
                     break;
 
@@ -157,9 +159,16 @@ while(usedDepths.length < maxTest){
 }
 
 //Reset logs for tests
-fileControl.redirect('../iri');
-fileControl.copydb();
-fileControl.makeLogDir();
+if(loc == "./"){
+    fileControl.redirect('../iri');
+    fileControl.copydb();
+    fileControl.makeLogDir();
+} else {
+    fileControl.redirect(loc)
+    fileControl.makeLogDir();
+    
+    
+}
 
 //Build Command for node
 var command = comBuilder.buildCommand(loc,version,port,1,testnet,false);
@@ -199,6 +208,7 @@ setTimeout(function(){
     fileControl.tipLog(maxTest,maxIterations);
     fileControl.milestoneLog();
     fileControl.timestampLog();
+   
     nodeProcess.killNodes(1,pids);
   
     console.log("Log files created");
@@ -207,8 +217,11 @@ setTimeout(function(){
 },timeout);
 
 
+
 //Force exit any processes that may still be running in error after tests
+
 setTimeout(function(){
+    console.log('You can find the logs in ' + process.cwd());
     process.exit();
 },exitTime);
 

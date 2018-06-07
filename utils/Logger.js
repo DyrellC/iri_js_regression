@@ -9,8 +9,10 @@ locTipCount: [],
 
 tip: [],
 unique: [],
-repeats: [],
+repeatCount: [],
 repeatTips: [],
+
+tipValidator: [],
 
 milestones: [],
 milestoneCount: [],
@@ -42,13 +44,16 @@ handleTransResults: function(data,testnum){
                  var tip1 = data.trunkTransaction;
                  var tip2 = data.branchTransaction;
                  var timestamp = Date.now();
+                 var testPrefix = "Test "+testnum + ": ";
 
                  var tempTip1 = "";
                  var tempTip2 = "";   
 
                  //Check for tips that equal one another
                  if(tip1 == tip2){
-                   logInfo.checkArrayCount(logInfo.branchEqTrunk,logInfo.equalCount,"Test " + testnum + ": " + tip1);
+                   console.log(tip1 +  " = " + tip2);
+                   var equalTips = "Test " + testnum + ": " + tip1;
+                   logInfo.checkArrayCount(logInfo.branchEqTrunk,logInfo.equalCount,equalTips);
                  }               
                                  
                  
@@ -61,45 +66,60 @@ handleTransResults: function(data,testnum){
                  var testLog = testPrefix + "  " + timestamp +"\nTip 1 = " + tempTip1 + ",\nTip 2 = " + tempTip2;
                 logInfo.transTimestamps.push(testLog); 
                 
-                logInfo.checkArrayCount(logInfo.locTip,logInfo.locTipCount,testPrefix + tip1);
+                var locTipVal = testPrefix + tip1;
+                var locTipVal2 = testPrefix + tip2;
                 
-                if(!logInfo.locTip.includes(testPrefix + tip1)){
-                    logInfo.checkArray(compTips,tip1);                   
+                if(!logInfo.locTip.includes(locTipVal)){
+                    logInfo.checkArray(logInfo.compTips,tip1);                   
                 } 
 
-                logInfo.checkArrayCount(logInfo.locTip,logInfo.locTipCount,testPrefix + tip2);
+                logInfo.checkArrayCount(logInfo.locTip,logInfo.locTipCount,locTipVal);
                 
-                if(!logInfo.locTip.includes(testPrefix + tip2)){
-                    logInfo.checkArray(compTips,tip2);                
+                if(!logInfo.locTip.includes(locTipVal2)){
+                    logInfo.checkArray(logInfo.compTips,tip2);                
                 }
+                
+                logInfo.checkArrayCount(logInfo.locTip,logInfo.locTipCount,locTipVal2);
+                
 
+                
+          
                 if(!logInfo.tip.includes(tip1)){
                     logInfo.tip.push(tip1);
-                } else {
-                     if(!logInfo.unique.includes(testPrefix + tip1)){
-                        logInfo.unique.push(testPrefix + tip1);
-                    } else {
-                        if(!logInfo.repeatTips.includes(tip1)){
-                            logInfo.repeatTips.push(tip1);
-                        }
-                    } 
+                } 
+                
+                if(!logInfo.tip.includes(tip2)){
+                    logInfo.tip.push(tip2);
                 }
 
 
-                if(!logInfo.tip.includes(tip2)){
-                    logInfo.tip.push(tip2);
-                } else {
-                    if(!logInfo.unique.includes(testPrefix + tip2)){
-                        logInfo.unique.push(testPrefix + tip2)
-                    } else {
-                        if(!logInfo.repeatTips.includes(tip2)){
-                            logInfo.repeatTips.push(tip2);
-                        }        
-                    }                
-                }  
-                 
 
-
+                if(!logInfo.unique.includes(testPrefix + tip1)){
+                    logInfo.unique.push(testPrefix + tip1); 
+                    if(!logInfo.repeatTips.includes(tip1)){
+                        logInfo.repeatTips.push(tip1);
+                        logInfo.repeatCount.push(1);
+                    }else{
+                        var pos = logInfo.repeatTips.indexOf(tip1);
+                        logInfo.repeatCount[pos] += 1;
+                    }         
+                }
+                
+                
+                   
+                
+                if(!logInfo.unique.includes(testPrefix + tip2)){
+                    logInfo.unique.push(testPrefix + tip2);
+                    if(!logInfo.repeatTips.includes(tip2)){
+                        logInfo.repeatTips.push(tip2);
+                        logInfo.repeatCount.push(1);
+                    }else{
+                        var pos = logInfo.repeatTips.indexOf(tip2);
+                        logInfo.repeatCount[pos] += 1;
+                    }                       
+                    
+                }           
+                
 },
 
 handleTimestampResults: function(data){
@@ -134,14 +154,20 @@ handleTimestampResults: function(data){
 
 },
 
-handleTipValidation: function(data){
+handleTipValidation: function(transaction,data){
+        var tempTransaction = "";
+        for(var x=0;x<8;x++){
+            tempTransaction += transaction[x];
+        }
         if(data.length > 0){
-            console.log("\nTransaction Approvees:");
-            console.log(data);
+            var approvees = "Transaction " + tempTransaction + " Approvees: \n" + data + "\nTransaction is not a tip.\n";
+            logInfo.tipValidator.push(approvees);
             console.log("Non-Tip Transactions Found");
         } else {
-            console.log("Transaction is Tip");
+            var isTip = "Transaction: " + tempTransaction + " is a tip.\n";
+            logInfo.tipValidator.push(isTip);
         }
+    console.log(logInfo.tipValidator);
 },
 
 

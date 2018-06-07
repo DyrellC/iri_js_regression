@@ -23,6 +23,22 @@ redirect: function(loc) {
 
 
 makeLogDir: function(){
+    
+    try{
+        rimraf.sync('./nodeTests/');
+        console.log('Previous logs removed');
+        }catch(err){
+            console.log('Error deleting ./nodeTests, directory may not exist');
+        }
+
+    try {
+        fs.mkdirSync('./nodeTests/');
+        console.log('./nodeTests/ created');
+        } catch(err){
+            console.log('Error making directory, ./nodeTests may already exist');
+        }
+    
+
     try{
         fs.mkdirSync(logDir); 
         console.log(logDir + " created");       
@@ -101,22 +117,10 @@ copydb: function() {
          console.log(err + "\n");   
     }
 
-    try{
-            rimraf.sync('./nodeTests/');
-            console.log('Previous logs removed');
-        }catch(err){
-            console.log('Error deleting ./nodeTests, directory may not exist');
-        }
-
-    try {
-        fs.mkdirSync('./nodeTests/');
-        console.log('./nodeTests/ created');
-        } catch(err){
-            console.log('Error making directory, ./nodeTests may already exist');
-        }
-    
+ 
     
 },
+
 
 tipLog: function(maxTest,maxIterations){
        for(var x=0;x<logger.locTip.length;x++){
@@ -141,21 +145,29 @@ tipLog: function(maxTest,maxIterations){
 
         fs.appendFileSync(transPath,"\nBranch and Trunk Equal: \n");
         for(var x=0;x<logger.branchEqTrunk.length;x++){
-            fs.appendFileSync(transPath, logger.branchEqTrunk[x] + "\nCount: " + logger.equalCount[x]);                
+            var equalLog = logger.branchEqTrunk[x] + "\nCount: " + logger.equalCount[x];
+            fs.appendFileSync(transPath, equalLog);                
         }
 
-        fs.appendFileSync(transPath,logger.repeatTips);
-        if(logger.repeats.length > 0){
-            for(var x=0;x<logger.repeats.length;x++){
-               var tempRepeats = "";
-               for(var i=0;i<8;i++){
-                   tempRepeats += logger.repeats[x][i];
-                }
+        fs.appendFileSync(transPath,repeatTips);
+        if(logger.repeatTips.length > 0){
+            for(var x=0;x<logger.repeatTips.length;x++){
+               if(logger.repeatCount[x] > 1){
+                var tempRepeats = "";
+                for(var i=0;i<8;i++){
+                   tempRepeats += logger.repeatTips[x][i];
+                 }
   
                 fs.appendFileSync(transPath,(tempRepeats + "\n"));
-            }
+               }  
+            }   
         } else {
             fs.appendFileSync(transPath, "0 branches were equal to trunk");
+        }
+
+        fs.appendFileSync(transPath, "\nTip Validation:\n");
+        for(var x=0;x<logger.tipValidator.length;x++){
+            fs.appendFileSync(transPath,logger.tipValidator[x]);
         }
 
 },
@@ -190,7 +202,8 @@ tipLog: function(maxTest,maxIterations){
 
 
     timestampLog: function(){
-        var transAge = ((Math.floor(Date.now()/1000) - logger.tipTimestamps[i])/(3600)).toFixed(2);
+        var currentTime = Math.floor(Date.now()/1000)
+        
         logger.transTimestamps.sort();
 
         fs.writeFileSync(testLogPath, "Transactions Test Log: \n");
@@ -210,11 +223,12 @@ tipLog: function(maxTest,maxIterations){
 
         fs.writeFileSync(timeLogPath,"Returned Transaction Timestamps: \n");
         for(var i=0;i<logger.compTips.length;i++){
+            var transAge = (currentTime - logger.tipTimestamps[i]).toFixed(2);
             var tempTrans = "";                    
             for(var x=0;x<8;x++){
                 tempTrans += logger.compTips[i][x];
             }
-            var tempLog = tempTrans + ", Timestamp: " + logger.tipTimestamps[i] + "\nAge: " + transAge + " Hours\n";
+            var tempLog = tempTrans + ", Timestamp: " + logger.tipTimestamps[i] + "\nAge: " + transAge + " Seconds\n";
             fs.appendFileSync(timeLogPath,tempLog);
         }
 
