@@ -15,7 +15,8 @@
     "rimraf": "^2.6.2",
     "maven": "~4.4.0",
     "sleep": "~5.1.1",
-    "ps-list": "~4.1.0"
+    "ps-list": "~4.1.0",
+    "request": "~2.87.0"
   },
   "repository": {
     "type": "git",
