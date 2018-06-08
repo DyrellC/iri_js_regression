@@ -1,4 +1,5 @@
 var converter = require('./TrytesAndTrits')
+const fileControl = require('./FileControl')
 
 
 
@@ -148,8 +149,9 @@ handleTimestampResults: function(data){
                             var convertedVal = converted[n-1];
                            
                             final = final * 3 + convertedVal;
-                        }                       
-                        logInfo.tipTimestamps.push(final);
+                        }  
+                        logInfo.tipTimestamps.push(final);                     
+                        console.log("Timestamp logged");
                     }                     
 
 },

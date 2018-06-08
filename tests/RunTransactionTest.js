@@ -77,7 +77,7 @@ if(process.argv.length > 2){
                     break;
 
             case "--port":
-                    port = argVal;
+                    port = Number(argVal);
                     if(typeof argVal == 'undefined' || argVal == ""){
                         console.log("Port argument not valid");
                         process.exit();
@@ -171,7 +171,7 @@ if(loc == "./"){
 }
 
 //Build Command for node
-var command = comBuilder.buildCommand(loc,version,port,1,testnet,false);
+var command = comBuilder.buildCommand(loc,version,port,1,testnet,false,false,neighbors);
 //Start node
 nodeProcess.openNodes(command,0,pids);
 
@@ -196,7 +196,7 @@ for(var n=0;n<maxTest;n++){
 setTimeout(function(){
     apiConfig.getTimestamps(logger.compTips,port);
     apiConfig.validateTips(logger.compTips,port);
-},20000);
+},30000);
 
 
 
@@ -212,7 +212,6 @@ setTimeout(function(){
     nodeProcess.killNodes(1,pids);
   
     console.log("Log files created");
-    console.log(logger.tipTimestamps);
 
 },timeout);
 
@@ -224,4 +223,5 @@ setTimeout(function(){
     console.log('You can find the logs in ' + process.cwd());
     process.exit();
 },exitTime);
+
 

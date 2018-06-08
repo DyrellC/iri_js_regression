@@ -202,7 +202,8 @@ tipLog: function(maxTest,maxIterations){
 
 
     timestampLog: function(){
-        var currentTime = Math.floor(Date.now()/1000)
+        var currentTime = Math.floor(Date.now()/1000);
+        console.log(currentTime);
         
         logger.transTimestamps.sort();
 
@@ -222,16 +223,25 @@ tipLog: function(maxTest,maxIterations){
         } 
 
         fs.writeFileSync(timeLogPath,"Returned Transaction Timestamps: \n");
+        console.log("Ret trans tmstmp comptip length: " + logger.compTips.length);
         for(var i=0;i<logger.compTips.length;i++){
-            var transAge = (currentTime - logger.tipTimestamps[i]).toFixed(2);
+            var transAge = (currentTime - logger.tipTimestamps[i]);
             var tempTrans = "";                    
             for(var x=0;x<8;x++){
                 tempTrans += logger.compTips[i][x];
             }
             var tempLog = tempTrans + ", Timestamp: " + logger.tipTimestamps[i] + "\nAge: " + transAge + " Seconds\n";
             fs.appendFileSync(timeLogPath,tempLog);
-        }
+        } 
 
+    },
+
+    transTimestampLog: function(timestamp){
+        var currentTime = Math.floor(Date.now()/1000);
+        var transAge = (currentTime - timestap).toFixed(2);
+        var tempLog = tempTrans + ", Timestamp: " + logger.tipTimestamps[i] + "\nAge: " + transAge + " Seconds\n";
+        fs.appendFileSync(timeLogPath,tempLog);
+        console.log(tempLog);
     },
 
     nodeLog: function(data) {

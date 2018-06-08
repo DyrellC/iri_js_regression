@@ -5,7 +5,7 @@ const copydir = require('copy-dir');
 
 module.exports = {
 
-buildCommand: function (loc,version,portIn,numNodes,testnet,unpack){
+buildCommand: function (loc,version,portIn,numNodes,testnet,unpack,locNeighbors,neighbors){
         
       assert.typeOf(version,'string');
       assert.typeOf(portIn,'number');
@@ -19,8 +19,15 @@ buildCommand: function (loc,version,portIn,numNodes,testnet,unpack){
       var location = loc;
       var iri = "iri-"+ version + ".jar ";  
       var port = "-p " + portIn + " -u " + portIn + " -t " + (portIn  + numNodes) + " ";
-      var neighbors = "-n \"udp://localhost:" + (portIn - 1) + 
-     "\" \"udp://localhost:" + (portIn + 1) + "\" ";
+      var neighbors = "";
+      
+      if(locNeighbors == true){
+        neighbors += "-n \"udp://localhost:" + (portIn - 1) + 
+        "\" \"udp://localhost:" + (portIn + 1) + "\" ";
+      } else {
+        neighbors += neighbors;
+      }
+      
       var cmdOpt = "";
 
 
@@ -64,6 +71,7 @@ buildCommand: function (loc,version,portIn,numNodes,testnet,unpack){
          }
 
         var outputCommand = base + location + iri + port + neighbors + cmdOpt;
+        console.log(outputCommand);
         return outputCommand;
       
 
